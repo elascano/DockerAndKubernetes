@@ -1,0 +1,31 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: elascano
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: my-microservice
+  namespace: elascano
+  labels:
+    app: my-microservice
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: my-microservice
+  template:
+    metadata:
+      labels:
+        app: my-microservice
+    spec:
+      containers:
+      - name: microservice-container
+        image: elascano2/hello-python-http:5
+        ports:
+        - containerPort: 3009
+        env:
+        - name: ENV_VAR
+          value: "production"
+
